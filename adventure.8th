@@ -1,0 +1,14 @@
+\ null gr:new var, mygraph \ create a new graph
+ \mygraph @ \ place on stack
+ \mygraph @ "living room" gr:+node  \ add a node
+
+
+:creat_map
+  \ leaves map on stack  --> used to seed graph object in final line
+  \ Needs a list of locations (mynodes) and routes (myiedges) - could be on stack  --> edges nodes --- 
+  m:new var, testmap2           \ create a map
+  testmap2 @ "nodes" mynodes @  m:!
+  "edges" myedges @ m:!        \ leaves map on stack
+  gr:new var, adventuremap     \clean stack
+;
+

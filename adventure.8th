@@ -1,14 +1,31 @@
 \ null gr:new var, mygraph \ create a new graph
- \mygraph @ \ place on stack
- \mygraph @ "living room" gr:+node  \ add a node
+\ mygraph @ \ place on stack
+\ mygraph @ "living room" gr:+node  \ add a node
 
+\ needs datafile
 
-:creat_map
-  \ leaves map on stack  --> used to seed graph object in final line
+\ with: datafile
+\
+[[0,1],[1,2]] var, edgelist
+["living room","kitchen","garden"] var, nodelist
+m:new var, mymap
+
+: create_map
+  \ edgeslist nodeslist seedmap -- map
+  \ leaves map on stack  
   \ Needs a list of locations (mynodes) and routes (myiedges) - could be on stack  --> edges nodes --- 
-  m:new var, testmap2           \ create a map
-  testmap2 @ "nodes" mynodes @  m:!
-  "edges" myedges @ m:!        \ leaves map on stack
-  gr:new var, adventuremap     \clean stack
+
+  "nodes" rot  m:!  \ {} nodes [] -- {[nodes]}
+  "edges" rot m:!        \ leaves map on stack  
 ;
 
+
+  edgelist @
+  nodelist @
+  mymap @
+  create_map
+  gr:new var, adventuremap      \ clean stack
+  adventuremap @ 
+  .s
+
+bye

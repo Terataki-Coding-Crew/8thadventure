@@ -1,7 +1,14 @@
-\
+\  Data file for adventure game
 \
 \
 
-[[0,1],[1,2]] var, edgelist
-["living room","kitchen","garden"] var, nodelist
+"Antarctic Cave Adventure" var, advtitle
 
+
+{
+  "nodes": [{"0": {description: "you are in the living room",
+                            items: ["knife", "stove"]}}, 
+            {"1": {description: "you are in a kitchen"}}, 
+            {"2": {description: "you are in the garden"}}],
+  "edges": [[0,1],[1,2]]
+} var, advmap

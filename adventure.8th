@@ -2,28 +2,22 @@
 \ mygraph @ \ place on stack
 \ mygraph @ "living room" gr:+node  \ add a node
 
+0 var, current_node
+
+
+\ set up graph (map) from datafile
 needs datafile
 
 with: datafile
-\
-m:new var, mymap
-
-: create_map
-  \ edgeslist nodeslist seedmap -- map
-  \ leaves map on stack  
-  \ Needs a list of locations (mynodes) and routes (myiedges) - could be on stack  --> edges nodes --- 
-
-  "nodes" rot  m:!  \ {} nodes [] -- {[nodes]}
-  "edges" rot m:!        \ leaves map on stack  
-;
-
-
-  edgelist @
-  nodelist @
-  mymap @
-  create_map
+  advtitle @ var, title
+  title @ . cr \ Print title
+  advmap @
   gr:new var, adventuremap      \ clean stack
   adventuremap @ 
-  .s
-
+  . cr
+  ;with
+adventuremap @ gr:nodes .s current_node @ a:@ .s \ fetch item at current_node leaves gr a m on stack
+current_node @ m:@ "description" m:@ . \ Prints description of current node
+"items" m:@ .   \ list of items
+\ Currently leaves three items on stack --> gr a m
 bye

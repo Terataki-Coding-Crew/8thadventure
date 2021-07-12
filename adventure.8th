@@ -3,7 +3,8 @@
 \ mygraph @ "living room" gr:+node  \ add a node
 
 0 var, current_node
-
+[] var, available_items
+[] var, inventory
 
 \ set up graph (map) from datafile
 needs datafile
@@ -13,11 +14,32 @@ with: datafile
   title @ . cr \ Print title
   advmap @
   gr:new var, adventuremap      \ clean stack
-  adventuremap @ 
-  . cr
+  cr
   ;with
-adventuremap @ gr:nodes .s current_node @ a:@ .s \ fetch item at current_node leaves gr a m on stack
-current_node @ m:@ "description" m:@ . \ Prints description of current node
-"items" m:@ .   \ list of items
-\ Currently leaves three items on stack --> gr a m
+
+: look 
+  [] available_items ! \ clear items
+  adventuremap @ gr:nodes current_node @ a:@ 
+  \ fetch item at current node
+  current_node @ m:@ "description" m:@ . cr \ get and print description
+  "you can see: " . cr
+  "items" m:@ dup ( . cr ) a:each \ Print each item in the items array
+  drop drop drop   \ clear top of stack 
+  available_items @ swap a:+ \ store found items in available_items
+  2drop 2drop drop \ clear the stack
+;
+
+look
+
+
+
+
+
+
+
+
+
+
+\ TODO set up console for I/O
+\ TODO write movement 
 bye

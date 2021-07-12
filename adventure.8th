@@ -2,12 +2,10 @@
 \ mygraph @ \ place on stack
 \ mygraph @ "living room" gr:+node  \ add a node
 
-\ needs datafile
+needs datafile
 
-\ with: datafile
+with: datafile
 \
-[[0,1],[1,2]] var, edgelist
-["living room","kitchen","garden"] var, nodelist
 m:new var, mymap
 
 : create_map

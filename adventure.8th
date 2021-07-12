@@ -29,7 +29,10 @@ with: datafile
   2drop 2drop drop \ clear the stack
 ;
 
-look
+: app:main 
+  look
+  bye
+;
 
 
 
@@ -42,4 +45,4 @@ look
 
 \ TODO set up console for I/O
 \ TODO write movement 
-bye
+

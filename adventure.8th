@@ -18,6 +18,7 @@ with: datafile
   ;with
 
 : look 
+  \ -- 
   [] available_items ! \ clear items
   adventuremap @ gr:nodes current_node @ a:@ 
   \ fetch item at current node
@@ -29,8 +30,16 @@ with: datafile
   2drop 2drop drop \ clear the stack
 ;
 
+: find 
+  \ item array -- 
+  ( over n:= .s if "found" . then ) a:each!
+  drop drop .s \ clear stack of boolean and item
+  ;
+
+
 : app:main 
-  look
+  \ look
+  2 [1,2,3,4,5]  .s find
   bye
 ;
 

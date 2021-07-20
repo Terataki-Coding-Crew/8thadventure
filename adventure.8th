@@ -31,15 +31,38 @@ with: datafile
 ;
 
 : find 
-  \ item array -- 
-  ( over n:= .s if "found" . then ) a:each!
-  drop drop .s \ clear stack of boolean and item
-  ;
+  \ item array --  bool (but needs work)
+  false -rot                \ put false to bottom
+  ( over s:= if "true"  break  \ bring item to TOS for comparison --> item bool 
+                else
+                then ) a:each!
+  drop              \ drop array
+  if 2drop "true"    \ put true on TOS
+  then ;
+
+: found
+  find ;
+
+
+: take
+  \ item array
+  over swap  \ get copy of item to bottom
+  found if
+        "You have a " . . cr
+        else
+        "There is no " . . " here." . cr  
+        then ;
+
+\ remove item from available items
+\ add to inventory
+\ copy available_items back to location items
+\
+
 
 
 : app:main 
-  \ look
-  2 [1,2,3,4,5]  .s find
+  look
+  "knife" available_items @ take
   bye
 ;
 

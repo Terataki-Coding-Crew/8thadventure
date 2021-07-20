@@ -12,3 +12,9 @@
             {"2": {description: "you are in the garden"}}],
   "edges": [[0,1],[1,2]]
 } var, advmap
+
+
+
+
+\ TODO add descriptions of each item -- use dicts items: [{name: "", description: ""}, {}]
+\ 

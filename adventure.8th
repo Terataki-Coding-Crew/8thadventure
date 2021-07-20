@@ -4,7 +4,7 @@
 
 0 var, current_node
 [] var, available_items
-[] var, inventory
+[] var, inventory_list
 
 \ set up graph (map) from datafile
 needs datafile
@@ -31,7 +31,7 @@ with: datafile
 ;
 
 : find 
-  \ item array --  bool (but needs work)
+  \ item array --  bool item
   false -rot                \ put false to bottom
   ( over s:= if "true"  break  \ bring item to TOS for comparison --> item bool 
                 else
@@ -43,18 +43,47 @@ with: datafile
 : found
   find ;
 
+: inventory 
+  \ --
+  "INVENTORY" . cr
+  "You have: " . cr
+   inventory_list @
+   a:len 0 > if
+            ( . cr ) a:each! cr 
+            else
+            "Nothing here" . cr 
+            then
+
+  drop ;     \ drop list and index
+
 
 : take
-  \ item array
+  \ item array -- 
   over swap  \ get copy of item to bottom
   found if
+        dup dup
         "You have a " . . cr
+        available_items @ swap a:-   \ remove from available items
+        drop
+        inventory_list @ a:len rot a:! \ add to end of inventory
         else
         "There is no " . . " here." . cr  
-        then ;
+        then 
+        drop ;
 
-\ remove item from available items
-\ add to inventory
+: drop_item
+  \ item --
+  dup \ item item
+  inventory_list @ 
+  found if
+          dup dup . " dropped." . cr
+          inventory_list @ swap a:- drop
+          available_items @ a:len rot a:!
+          drop
+        else
+          "You do not have a " . . cr .s
+        then ;  \ drop array
+
 \ copy available_items back to location items
 \
 
@@ -63,6 +92,10 @@ with: datafile
 : app:main 
   look
   "knife" available_items @ take
+  inventory
+  "knife"   drop_item 
+  inventory
+  available_items @ . cr .s
   bye
 ;
 

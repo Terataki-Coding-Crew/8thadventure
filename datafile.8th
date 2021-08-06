@@ -7,9 +7,15 @@
 
 {
   "nodes": [{"0": {description: "you are in the living room",
-                            items: ["knife", "stove"]}}, 
-            {"1": {description: "you are in a kitchen"}}, 
-            {"2": {description: "you are in the garden"}}],
+                  items: ["knife", "stove"],
+                  exits: {north: "",
+                          south: ""}}}, 
+            {"1": {description: "you are in a kitchen",
+                  items: [],
+                  exits: {}}}, 
+            {"2": {description: "you are in the garden",
+                  items: [],
+                  exits: {}}}],
   "edges": [[0,1],[1,2]]
 } var, advmap
 

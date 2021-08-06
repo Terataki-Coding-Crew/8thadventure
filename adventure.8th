@@ -2,6 +2,9 @@
 \ mygraph @ \ place on stack
 \ mygraph @ "living room" gr:+node  \ add a node
 
+
+needs console/loaded
+
 0 var, current_node
 [] var, available_items
 [] var, inventory_list
@@ -13,7 +16,7 @@ with: datafile
   advtitle @ var, title
   title @ . cr \ Print title
   advmap @
-  gr:new var, adventuremap      \ clean stack
+  gr:new var, adventuremap      \ create adventuremap from JSON
   cr
   ;with
 
@@ -31,7 +34,7 @@ with: datafile
 ;
 
 : find 
-  \ item array --  bool item
+  \ item array --  item bool
   false -rot                \ put false to bottom
   ( over s:= if "true"  break  \ bring item to TOS for comparison --> item bool 
                 else
@@ -88,16 +91,29 @@ with: datafile
 \
 
 
+: get_exits
+  \ -- map
+  \ return a map (dictionary) {direction:description} of exits from a location
+  adventuremap @ gr:nodes current_node @ a:@
+  -rot 2drop   \ remove graph(map) and list of nodes from stack
+   \ leaving just current node
+  current_node @ m:@ "exits" m:@  \ Select value for "exits" key 
+  -rot 2drop .s \ drop unwanted stack entries leaaving dict
+;
 
-: app:main 
+: app:main
+  \ requires console
+  with: con
+  cyan onBlack
+
   look
   "knife" available_items @ take
   inventory
   "knife"   drop_item 
   inventory
   available_items @ . cr .s
-  bye
-;
+  get_exits
+  bye ;
 
 
 
@@ -110,4 +126,4 @@ with: datafile
 
 \ TODO set up console for I/O
 \ TODO write movement 
-
+\ 

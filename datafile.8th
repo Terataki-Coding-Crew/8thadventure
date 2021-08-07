@@ -8,14 +8,18 @@
 {
   "nodes": [{"0": {description: "you are in the living room",
                   items: ["knife", "stove"],
-                  exits: {north: "",
-                          south: ""}}}, 
+                  exits: {north: "Door to the north",
+                          south: "Gate to the south"},
+                  links: {north: 1,
+                          south: 2}}}, 
             {"1": {description: "you are in a kitchen",
                   items: [],
-                  exits: {}}}, 
+                  exits: {},
+                  links: {}}}, 
             {"2": {description: "you are in the garden",
                   items: [],
-                  exits: {}}}],
+                  exits: {},
+                  links: {}}}],
   "edges": [[0,1],[1,2]]
 } var, advmap
 

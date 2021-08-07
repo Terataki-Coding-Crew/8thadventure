@@ -20,18 +20,6 @@ with: datafile
   cr
   ;with
 
-: look 
-  \ -- 
-  [] available_items ! \ clear items
-  adventuremap @ gr:nodes current_node @ a:@ 
-  \ fetch item at current node
-  current_node @ m:@ "description" m:@ . cr \ get and print description
-  "you can see: " . cr
-  "items" m:@ dup ( . cr ) a:each \ Print each item in the items array
-  drop drop drop   \ clear top of stack 
-  available_items @ swap a:+ \ store found items in available_items
-  2drop 2drop drop \ clear the stack
-;
 
 : find 
   \ item array --  item bool
@@ -84,7 +72,7 @@ with: datafile
           available_items @ a:len rot a:!
           drop
         else
-          "You do not have a " . . cr .s
+          "You do not have a " . . cr 
         then ;  \ drop array
 
 \ copy available_items back to location items
@@ -98,8 +86,34 @@ with: datafile
   -rot 2drop   \ remove graph(map) and list of nodes from stack
    \ leaving just current node
   current_node @ m:@ "exits" m:@  \ Select value for "exits" key 
-  -rot 2drop .s \ drop unwanted stack entries leaaving dict
+  -rot 2drop \ drop unwanted stack entries leaaving dict
 ;
+
+: display_exits
+  \ map -- 
+  \ map (dict) of exits at location
+  get_exits
+  "looking around, you can see " . cr
+  ( . cr drop ) m:each
+  drop
+;
+
+: look 
+  \ -- 
+  [] available_items ! \ clear items
+  adventuremap @ gr:nodes current_node @ a:@ 
+  \ fetch item at current node
+  current_node @ m:@ "description" m:@ . cr \ get and pri    nt description
+  "you can see: " . cr
+  "items" m:@ dup ( . cr ) a:each \ Print each item in th    e items array
+  drop drop drop   \ clear top of stack 
+  available_items @ swap a:+ \ store found items in avail    able_items
+  2drop 2drop drop \ clear the stack
+  display_exits
+;
+
+
+
 
 : app:main
   \ requires console
@@ -111,8 +125,8 @@ with: datafile
   inventory
   "knife"   drop_item 
   inventory
-  available_items @ . cr .s
-  get_exits
+  available_items @ . cr
+  .s
   bye ;
 
 

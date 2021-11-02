@@ -8,6 +8,7 @@ needs console/loaded
 0 var, current_node
 [] var, available_items
 [] var, inventory_list
+"" var, input_string
 
 \ set up graph (map) from datafile
 needs datafile
@@ -112,21 +113,32 @@ with: datafile
   display_exits
 ;
 
-
+: get_input
+  \ -- 
+  "" input_string ! \ clear the input string 
+  repeat 
+    con:key dup input_string @ swap s:+ 
+    input_string ! input_string @ . space 
+    32 = 
+    until!
+;   \ Places input string into input_string
 
 
 : app:main
   \ requires console
   with: con
-  cyan onBlack
+  bright cyan onBlack
 
   look
   "knife" available_items @ take
   inventory
   "knife"   drop_item 
   inventory
-  available_items @ . cr
-  .s
+  \ available_items @ . cr
+  "What would you like to do? " . cr
+  get_input
+
+  input_string @ .
   bye ;
 
 
